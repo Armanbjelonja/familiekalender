@@ -65,10 +65,21 @@ create policy "familien ser tokens" on public.tokens
    De to må gerne ligge i frontenden – det er Row Level Security, der beskytter data.
    **Del aldrig** `service_role`/`secret`-nøglen eller database-adgangskoden.
 
+## Trin 3 – GitHub Pages (færdigt 17.11.2026)
+
+- Kalenderen: https://armanbjelonja.github.io/familiekalender/
+- Koden: https://github.com/Armanbjelonja/familiekalender (offentligt, ingen hemmeligheder)
+- Ændringer kommer på nettet ved `git push`; GitHub bruger ca. et minut på at udgive dem.
+
+### Læg kalenderen på iPad'ens (eller iPhonens) hjemmeskærm
+
+1. Åbn adressen ovenfor i **Safari**.
+2. Tryk på Del-knappen (firkanten med pil op) → **Føj til hjemmeskærm** → **Tilføj**.
+3. Åbn appen "Kalender" fra hjemmeskærmen, og log ind med familiens login.
+   Det skal gøres i appen – login i Safari følger ikke med over.
+
 ## Kommer senere
 
-- **Trin 3 – GitHub Pages**: gratis GitHub-konto og et repository. På gratis-planen skal
-  repository'et være offentligt; koden indeholder ingen hemmeligheder.
 - **Trin 4 – Claude API**: konto på https://console.anthropic.com med et lille forudbetalt
   beløb og en API-nøgle. Nøglen lægges direkte ind i Supabase (Edge Functions → Secrets)
   – den skal ikke sendes til Claude i chatten og kommer aldrig i frontenden.
