@@ -219,6 +219,29 @@ small { color: var(--svag); }
 .fyld { flex: 1; }
 [hidden] { display: none !important; }
 
+/* ---------- Assistent ---------- */
+
+.assistent {
+  padding: 0 16px calc(12px + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; gap: 8px;
+}
+.aslinje { flex-direction: row; align-items: center; gap: 8px; padding: 0; }
+.aslinje input { flex: 1; min-width: 0; background: var(--flade); min-height: 46px; }
+.aslinje button { min-height: 46px; }
+.mikrofon { font-size: 1.3rem; padding: 6px 14px; border-radius: 999px; }
+.mikrofon.lytter { background: var(--fare); border-color: var(--fare); animation: puls 1.2s infinite; }
+@keyframes puls { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--fare) 25%, transparent); } }
+.assvar {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--flade); border: 1px solid var(--accent); border-radius: var(--radius);
+  padding: 10px 10px 10px 14px;
+}
+.assvar p { flex: 1; margin: 4px 0; font-size: 1.05rem; line-height: 1.4; white-space: pre-wrap; }
+.assvar.fejl { border-color: var(--fare); }
+.assvar.fejl p { color: var(--fare); }
+.assvar.venter p { color: var(--svag); }
+.assvar button { border: 0; background: none; min-height: 36px; padding: 4px 10px; }
+
 /* ---------- Login ---------- */
 
 .login { flex: 1; display: grid; place-items: center; padding: 16px; }

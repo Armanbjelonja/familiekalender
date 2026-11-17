@@ -1,5 +1,6 @@
 import { store } from './store.js';
 import * as D from './dato.js';
+import { startAssistent } from './assistent.js';
 
 const FAMILIE_FARVE = '#5c677d';
 const TIME_PX = 52; // højden af én time i dagsvisningen
@@ -506,6 +507,7 @@ if (!store.demo && !store.bruger) await visLogin(startfejl);
 $('#demo').hidden = !store.demo;
 $('#logud').hidden = store.demo;
 $('#logud').addEventListener('click', () => store.logUd());
+startAssistent();
 store.lyt(genindlaes);
 genindlaes();
 

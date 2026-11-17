@@ -53,6 +53,21 @@
 
   <main id="kalender"></main>
 
+  <!-- Assistent: tal eller skriv, Claude svarer og læser svaret højt -->
+  <section id="assistent" class="assistent" hidden>
+    <div id="assvar" class="assvar" hidden>
+      <p id="assvartekst" aria-live="polite"></p>
+      <button type="button" id="aslaes" class="ikon" aria-label="Læs svaret højt" title="Læs højt">🔊</button>
+      <button type="button" id="asluk" class="ikon" aria-label="Luk svaret" title="Luk">×</button>
+    </div>
+    <form id="asform" class="aslinje">
+      <button type="button" id="mikrofon" class="mikrofon" aria-label="Tal til kalenderen" title="Tal" hidden>🎤</button>
+      <input id="astekst" autocomplete="off" maxlength="1000" enterkeyhint="send"
+             placeholder="Sig eller skriv, fx “Tandlæge torsdag kl. 15 for Person 2”">
+      <button type="submit" class="primaer">Send</button>
+    </form>
+  </section>
+
   <dialog id="dialog">
     <form id="formular" novalidate>
       <h2 id="dialogtitel">Ny aftale</h2>

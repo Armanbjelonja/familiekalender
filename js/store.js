@@ -166,6 +166,29 @@ const skyStore = {
     return aftaler;
   },
 
+  // Sender en sætning til assistenten (edge function), som kalder Claude på serveren
+  async spoerg(tekst, historik) {
+    const { data } = await sb.auth.getSession();
+    const token = data.session?.access_token;
+    if (!token) throw new Error('Du er ikke logget ind.');
+    let svar;
+    try {
+      svar = await fetch(`${SUPABASE_URL}/functions/v1/assistent`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, apikey: SUPABASE_NOEGLE },
+        body: JSON.stringify({ tekst, historik }),
+      });
+    } catch {
+      throw new Error('Ingen forbindelse til assistenten.');
+    }
+    const krop = await svar.json().catch(() => null);
+    if (!svar.ok || !krop?.svar) {
+      throw new Error(krop?.fejl || (svar.status === 404 ? 'Assistenten er ikke sat op endnu.' : 'Assistenten svarede ikke.'));
+    }
+    if (krop.aendret) this.genhent();
+    return krop.svar;
+  },
+
   async gem(aftale) {
     const { id, ...felter } = aftale;
     const gemt = tjek(
