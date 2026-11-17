@@ -78,7 +78,12 @@ create policy "familien ser tokens" on public.tokens
 3. Åbn appen "Kalender" fra hjemmeskærmen, og log ind med familiens login.
    Det skal gøres i appen – login i Safari følger ikke med over.
 
-## Trin 4 – Claude API-nøgle (det eneste, der mangler, for at assistenten virker)
+## Trin 4 – Claude API-nøgle (færdigt 17.11.2026)
+
+**Husk:** nøglen "Kalender" i Claude Console **udløber 17.12.2026**, og API-kreditten
+(100 USD fra Max-abonnementet) udløber 16.12.2026. Når assistenten holder op med at svare:
+lav en ny nøgle (punkt 3 nedenfor) og erstat værdien af `ANTHROPIC_API_KEY` (punkt 4).
+Nøglen skal i feltet **Value** – i feltet Name skal der stå `ANTHROPIC_API_KEY`.
 
 Funktionen `assistent` er lagt op i Supabase (koden ligger i
 `supabase/functions/assistent/index.ts`, "Verify JWT" er slået fra, fordi funktionen selv
