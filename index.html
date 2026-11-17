@@ -13,6 +13,17 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Kalender">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <script>
+    // Sæt tema og vægskærm, før siden tegnes (undgår lysglimt). Samme regel som i js/app.js.
+    (function () {
+      var vaeg = false;
+      try { vaeg = localStorage.getItem('vaeg') === '1'; } catch (e) {}
+      var t = new Date().getHours();
+      var moerk = vaeg ? (t >= 20 || t < 7) : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.tema = moerk ? 'moerk' : 'lys';
+      if (vaeg) document.documentElement.classList.add('vaeg');
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -30,7 +41,9 @@
         <button data-visning="maaned">Måned</button>
       </div>
       <button id="ny" class="primaer">+ Ny aftale</button>
+      <button id="vaegknap" aria-pressed="false" title="Stor skrift, mørkt om aftenen, skærmen holdes tændt">Vægskærm</button>
       <button id="logud" hidden>Log ud</button>
+      <span id="ur" class="ur" hidden></span>
     </div>
   </header>
 

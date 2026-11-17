@@ -511,8 +511,76 @@ startAssistent();
 store.lyt(genindlaes);
 genindlaes();
 
-// Hold "i dag"-markering og nu-linje ajour
-setInterval(tegnHvisRoligt, 5 * 60 * 1000);
-function tegnHvisRoligt() {
-  if (!dialog.open) tegn();
+// ---------- Vægskærm (iPad i køkkenet) ----------
+// Stor skrift, mørkt tema om aftenen, skærmen holdes tændt, og kalenderen
+// hopper selv tilbage til "i dag", når ingen har rørt den et stykke tid.
+
+const MOERK_FRA = 20; // klokken 20 om aftenen …
+const MOERK_TIL = 7; // … til klokken 7 om morgenen
+const TILBAGE_EFTER_MS = 3 * 60 * 1000;
+
+const rod = document.documentElement;
+let vaeg = localStorage.getItem('vaeg') === '1';
+let sidstRoert = Date.now();
+let skaermlaas = null;
+
+function saetTema() {
+  const t = new Date().getHours();
+  const moerk = vaeg ? t >= MOERK_FRA || t < MOERK_TIL : matchMedia('(prefers-color-scheme: dark)').matches;
+  rod.dataset.tema = moerk ? 'moerk' : 'lys';
 }
+
+async function holdSkaermTaendt() {
+  if (!vaeg) {
+    skaermlaas?.release().catch(() => {});
+    skaermlaas = null;
+    return;
+  }
+  if (!('wakeLock' in navigator) || document.hidden) return;
+  try {
+    skaermlaas = await navigator.wakeLock.request('screen');
+  } catch {
+    // Ikke understøttet eller afvist – så styrer iPad'ens egen indstilling "Automatisk lås"
+  }
+}
+
+function visUr() {
+  $('#ur').hidden = !vaeg;
+  if (vaeg) $('#ur').textContent = D.kl(new Date());
+}
+
+function saetVaeg(til) {
+  vaeg = til;
+  localStorage.setItem('vaeg', til ? '1' : '0');
+  rod.classList.toggle('vaeg', til);
+  $('#vaegknap').setAttribute('aria-pressed', String(til));
+  saetTema();
+  visUr();
+  holdSkaermTaendt();
+}
+
+$('#vaegknap').addEventListener('click', () => {
+  saetVaeg(!vaeg);
+  tegn();
+});
+for (const h of ['pointerdown', 'keydown']) addEventListener(h, () => (sidstRoert = Date.now()), true);
+document.addEventListener('visibilitychange', holdSkaermTaendt);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', saetTema);
+saetVaeg(vaeg);
+
+// Én gang i minuttet: ur, tema, "i dag"-markering og nu-linje
+setInterval(() => {
+  saetTema();
+  visUr();
+  const rolig = Date.now() - sidstRoert;
+  if (dialog.open || rolig < 60 * 1000) return;
+  if (vaeg && rolig > TILBAGE_EFTER_MS && !D.sammeDag(tilstand.dato, new Date())) tilstand.dato = new Date();
+  // Hent en ny udgave af siden én gang i døgnet ved 4-tiden, så rettelser slår igennem af sig selv
+  const idag = D.isoDato(new Date());
+  if (vaeg && new Date().getHours() === 4 && localStorage.getItem('genindlaest') !== idag) {
+    localStorage.setItem('genindlaest', idag);
+    location.reload();
+    return;
+  }
+  tegn();
+}, 60 * 1000);

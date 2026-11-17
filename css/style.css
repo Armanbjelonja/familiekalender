@@ -10,20 +10,33 @@
   --radius: 10px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 16px;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bag: #12151b;
-    --flade: #1c2029;
-    --tekst: #eef0f4;
-    --svag: #98a2b3;
-    --kant: #2e3440;
-    --accent: #6c9bff;
-    --fare: #ff8787;
-    --idag: #3a3115;
-  }
+/* Mørkt tema. data-tema sættes af et lille script i index.html:
+   efter enhedens indstilling – eller efter klokken, når vægskærm er slået til. */
+:root[data-tema="moerk"] {
+  --bag: #12151b;
+  --flade: #1c2029;
+  --tekst: #eef0f4;
+  --svag: #98a2b3;
+  --kant: #2e3440;
+  --accent: #6c9bff;
+  --fare: #ff8787;
+  --idag: #3a3115;
+  color-scheme: dark;
 }
+
+/* Vægskærm (iPad i køkkenet): større skrift, så den kan læses på afstand */
+:root.vaeg { font-size: 21px; }
+:root.vaeg h1 { font-size: 1.5rem; }
+:root.vaeg .demo { display: none; }
+:root.vaeg .aftale { padding: 8px 10px 8px 16px; }
+:root.vaeg .aftale::before { width: 7px; }
+:root.vaeg .celle .aftale { padding: 3px 6px 3px 12px; font-size: .72rem; }
+:root.vaeg .maaned { grid-auto-rows: minmax(110px, 1fr); }
+.ur { font-size: 1.5rem; font-weight: 650; font-variant-numeric: tabular-nums; margin-left: 12px; }
+#vaegknap[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 * { box-sizing: border-box; }
 

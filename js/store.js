@@ -146,6 +146,8 @@ const skyStore = {
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) this.genhent();
     });
+    // Sikkerhedsnet for en skærm, der står tændt i dagevis: hent også hvert 5. minut
+    setInterval(() => this.genhent(), 5 * 60 * 1000);
   },
 
   async hentAftaler() {
@@ -155,8 +157,10 @@ const skyStore = {
   async genhent(ogsaaPersoner = false) {
     try {
       if (ogsaaPersoner) this.personer = tjek(await sb.from('personer').select('id, navn, farve').order('sortering'));
+      const foer = JSON.stringify(aftaler);
       await this.hentAftaler();
-      giv();
+      // Tegn kun om, når noget faktisk er ændret (ellers hopper rullepositionen)
+      if (ogsaaPersoner || JSON.stringify(aftaler) !== foer) giv();
     } catch (fejl) {
       console.warn('Kunne ikke hente aftaler:', fejl.message);
     }

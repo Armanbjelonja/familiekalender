@@ -101,6 +101,24 @@ Nøglen skal kun ligge i Supabase. Send den ikke i en chat, og læg den aldrig i
 Ændres funktionens kode senere, skal den lægges op igen: Edge Functions → `assistent` →
 Code → indsæt den nye kode → Deploy updates.
 
+## Trin 5 – iPad'en på væggen
+
+Når kalenderen ligger på hjemmeskærmen (se trin 3) og du er logget ind:
+
+1. Tryk på **Vægskærm** øverst i kalenderen. Knappen bliver blå, og valget huskes på iPad'en.
+   Det giver stor skrift, et ur, mørkt tema kl. 20–7, og kalenderen hopper selv tilbage til
+   "i dag" efter 3 minutter uden berøring. Hver nat ved 4-tiden henter den selv nyeste udgave.
+2. **Indstillinger → Skærm & Lysstyrke → Automatisk lås → Aldrig.** Det er den sikre måde at
+   holde skærmen tændt på; kalenderen beder også selv om det, men ikke alle iPadOS-versioner
+   respekterer det for apps på hjemmeskærmen.
+3. Lad iPad'en sidde i opladeren, og skru evt. lysstyrken ned / slå **Night Shift** til.
+4. Valgfrit – lås iPad'en til kalenderen, så ingen kommer til at lukke den:
+   **Indstillinger → Tilgængelighed → Forenklet adgang** → slå til og vælg en kode.
+   Åbn kalenderen, tryk tre gange på sideknappen (eller Hjem-knappen), og tryk **Start**.
+
+Klokkeslættene for mørkt tema står øverst i afsnittet "Vægskærm" i `js/app.js`
+(`MOERK_FRA` og `MOERK_TIL`).
+
 ## Kommer senere
 
 - **Trin 6–7**: kalender-abonnement og Siri-genvej sættes op på hver iPhone (guide følger).
