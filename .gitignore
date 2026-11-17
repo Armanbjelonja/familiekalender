@@ -1,0 +1,5 @@
+# Hemmeligheder hører aldrig hjemme i dette (offentlige) repository
+.env
+.env.*
+*.local
+node_modules/

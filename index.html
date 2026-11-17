@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Familiekalender</title>
+  <!-- Gør siden til en app, når den lægges på hjemmeskærmen (iPhone/iPad) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="ikoner/ikon-192.png">
+  <link rel="apple-touch-icon" href="ikoner/ikon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Kalender">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="nav">
+      <button id="forrige" class="ikon" aria-label="Forrige">‹</button>
+      <button id="idag">I dag</button>
+      <button id="naeste" class="ikon" aria-label="Næste">›</button>
+      <h1 id="titel"></h1>
+    </div>
+    <div class="hoejre">
+      <div class="visninger" id="visninger">
+        <button data-visning="dag">Dag</button>
+        <button data-visning="uge">Uge</button>
+        <button data-visning="maaned">Måned</button>
+      </div>
+      <button id="ny" class="primaer">+ Ny aftale</button>
+      <button id="logud" hidden>Log ud</button>
+    </div>
+  </header>
+
+  <section id="login" class="login" hidden>
+    <form id="loginform">
+      <h2>Familiekalender</h2>
+      <label>E-mail
+        <input type="email" name="email" required autocomplete="username" inputmode="email">
+      </label>
+      <label>Adgangskode
+        <input type="password" name="adgangskode" required autocomplete="current-password">
+      </label>
+      <p id="loginfejl" class="fejl" hidden></p>
+      <button type="submit" class="primaer">Log ind</button>
+    </form>
+  </section>
+
+  <div id="personer" class="personer" aria-label="Vis eller skjul personer"></div>
+  <p id="demo" class="demo" hidden>Demo-tilstand: aftalerne gemmes kun i denne browser, indtil Supabase er sat op.</p>
+
+  <main id="kalender"></main>
+
+  <dialog id="dialog">
+    <form id="formular" novalidate>
+      <h2 id="dialogtitel">Ny aftale</h2>
+
+      <label>Titel
+        <input name="titel" required autocomplete="off" maxlength="200">
+      </label>
+
+      <label class="tjek"><input type="checkbox" name="heldags"> Hele dagen</label>
+
+      <div class="raekke">
+        <label>Start
+          <input type="date" name="startdato" required>
+        </label>
+        <label class="tidfelt">Kl.
+          <input type="time" name="starttid" step="300">
+        </label>
+      </div>
+      <div class="raekke">
+        <label>Slut
+          <input type="date" name="slutdato" required>
+        </label>
+        <label class="tidfelt">Kl.
+          <input type="time" name="sluttid" step="300">
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Hvem?</legend>
+        <div id="hvem" class="hvem"></div>
+        <small>Ingen valgt = hele familien</small>
+      </fieldset>
+
+      <label>Sted
+        <input name="sted" autocomplete="off" maxlength="200">
+      </label>
+      <label>Note
+        <textarea name="note" rows="2" maxlength="2000"></textarea>
+      </label>
+
+      <p id="fejl" class="fejl" hidden></p>
+
+      <div class="knapper">
+        <button type="button" id="slet" class="fare">Slet</button>
+        <span class="fyld"></span>
+        <button type="button" id="annuller">Annuller</button>
+        <button type="submit" class="primaer">Gem</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

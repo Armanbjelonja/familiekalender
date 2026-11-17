@@ -1,0 +1,252 @@
+:root {
+  --bag: #f4f5f7;
+  --flade: #ffffff;
+  --tekst: #1b1f27;
+  --svag: #667085;
+  --kant: #dfe3ea;
+  --accent: #2f6fde;
+  --fare: #c92a2a;
+  --idag: #fff4d6;
+  --radius: 10px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bag: #12151b;
+    --flade: #1c2029;
+    --tekst: #eef0f4;
+    --svag: #98a2b3;
+    --kant: #2e3440;
+    --accent: #6c9bff;
+    --fare: #ff8787;
+    --idag: #3a3115;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bag);
+  color: var(--tekst);
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+
+button {
+  background: var(--flade);
+  border: 1px solid var(--kant);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  min-height: 40px;
+}
+button:hover { border-color: var(--svag); }
+button.primaer { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+button.fare { color: var(--fare); }
+button.ikon { font-size: 1.3rem; line-height: 1; padding: 6px 14px; }
+
+/* ---------- Top ---------- */
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px 8px;
+}
+.nav, .hoejre { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+h1 { font-size: 1.25rem; margin: 0 0 0 8px; font-weight: 650; }
+
+.visninger { display: flex; border: 1px solid var(--kant); border-radius: 8px; overflow: hidden; }
+.visninger button { border: 0; border-radius: 0; background: var(--flade); }
+.visninger button + button { border-left: 1px solid var(--kant); }
+.visninger button.aktiv { background: var(--accent); color: #fff; font-weight: 600; }
+
+.personer { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 10px; }
+.person {
+  display: inline-flex; align-items: center; gap: 7px;
+  border-radius: 999px; padding: 4px 12px; min-height: 32px; font-size: .9rem;
+  background: var(--flade); border: 1px solid var(--kant);
+}
+.person.skjult { opacity: .45; text-decoration: line-through; }
+.person.fast { color: var(--svag); }
+.prik { width: 12px; height: 12px; border-radius: 50%; background: var(--farve); flex: none; }
+
+.demo {
+  margin: 0 16px 10px; padding: 8px 12px; font-size: .85rem; color: var(--svag);
+  border: 1px dashed var(--kant); border-radius: 8px;
+}
+
+main { flex: 1; min-height: 0; padding: 0 16px 16px; display: flex; flex-direction: column; }
+
+/* ---------- Aftale-chip ---------- */
+
+.aftale {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px;
+  width: 100%; min-height: 0; text-align: left;
+  padding: 5px 8px 5px 12px;
+  border: 0; border-radius: 6px;
+  position: relative; overflow: hidden;
+  background: color-mix(in srgb, var(--farve) 16%, var(--flade));
+}
+.aftale::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--stribe);
+}
+.aftale.heldags { background: color-mix(in srgb, var(--farve) 30%, var(--flade)); }
+.aftale .tid { font-variant-numeric: tabular-nums; font-size: .85em; color: var(--svag); white-space: nowrap; }
+.aftale .tekst { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.aftale .hvem-tekst { flex-basis: 100%; font-size: .8em; color: var(--svag); }
+
+/* ---------- Måned ---------- */
+
+.maaned {
+  flex: 1; min-height: 0;
+  display: grid;
+  grid-template-columns: 2.4rem repeat(7, minmax(0, 1fr));
+  grid-template-rows: auto;
+  grid-auto-rows: minmax(92px, 1fr);
+  background: var(--kant); gap: 1px;
+  border: 1px solid var(--kant); border-radius: var(--radius); overflow: hidden;
+}
+.maaned .hoved {
+  background: var(--flade); padding: 6px; text-align: center;
+  font-size: .8rem; font-weight: 600; color: var(--svag);
+}
+.maaned .uge-nr {
+  background: var(--flade); color: var(--svag); font-size: .75rem;
+  text-align: center; padding-top: 8px;
+}
+.celle {
+  background: var(--flade); padding: 4px; cursor: pointer; min-width: 0;
+  display: flex; flex-direction: column; gap: 3px; overflow: hidden;
+}
+.celle.anden { background: color-mix(in srgb, var(--flade) 55%, var(--bag)); }
+.celle.anden .dagnr { color: var(--svag); }
+.celle .dagnr {
+  align-self: flex-start; font-size: .85rem; font-weight: 600;
+  min-width: 1.7em; height: 1.7em; display: grid; place-items: center; border-radius: 50%;
+}
+.celle.idag .dagnr { background: var(--accent); color: #fff; }
+.celle .aftale { padding: 2px 6px 2px 10px; font-size: .78rem; flex-wrap: nowrap; }
+.celle .aftale .tekst { white-space: nowrap; }
+.mere { font-size: .72rem; color: var(--svag); padding-left: 4px; }
+
+/* ---------- Uge ---------- */
+
+.uge {
+  flex: 1; min-height: 0;
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
+}
+.ugedag {
+  background: var(--flade); border: 1px solid var(--kant); border-radius: var(--radius);
+  display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+}
+.ugedag.idag { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.ugedag-hoved {
+  border: 0; border-bottom: 1px solid var(--kant); border-radius: 0;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0; padding: 8px 10px;
+}
+.ugedag.idag .ugedag-hoved { background: var(--idag); }
+.ugedag-hoved .navn { font-weight: 650; }
+.ugedag-hoved .dagnr { font-size: .8rem; color: var(--svag); }
+.ugedag-liste {
+  flex: 1; overflow-y: auto; padding: 6px; display: flex; flex-direction: column; gap: 5px; cursor: pointer;
+}
+.ugedag-liste .aftale { font-size: .88rem; }
+.tom { color: var(--svag); font-size: .8rem; padding: 4px; }
+
+/* ---------- Dag ---------- */
+
+.dagvisning {
+  flex: 1; min-height: 0; display: flex; flex-direction: column;
+  background: var(--flade); border: 1px solid var(--kant); border-radius: var(--radius); overflow: hidden;
+}
+.heldagsraekke {
+  display: flex; flex-direction: column; gap: 4px; padding: 8px 8px 8px 60px;
+  border-bottom: 1px solid var(--kant);
+}
+.dag-rulle { flex: 1; overflow-y: auto; }
+.tidslinje { position: relative; cursor: pointer; }
+.time { position: absolute; left: 0; right: 0; border-top: 1px solid var(--kant); }
+.time span {
+  position: absolute; top: 2px; left: 8px; font-size: .75rem; color: var(--svag);
+  font-variant-numeric: tabular-nums;
+}
+.blokke { position: absolute; inset: 0 8px 0 60px; }
+.aftale.blok { position: absolute; align-content: flex-start; box-shadow: 0 0 0 1px var(--flade); }
+.nu { position: absolute; left: 52px; right: 0; height: 2px; background: var(--fare); pointer-events: none; }
+.nu::before {
+  content: ""; position: absolute; left: -4px; top: -4px; width: 10px; height: 10px;
+  border-radius: 50%; background: var(--fare);
+}
+
+/* ---------- Dialog ---------- */
+
+dialog {
+  border: 1px solid var(--kant); border-radius: 14px; padding: 0;
+  background: var(--flade); color: var(--tekst);
+  width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px);
+}
+dialog::backdrop { background: rgb(0 0 0 / .45); }
+form { display: flex; flex-direction: column; gap: 12px; padding: 20px; }
+h2 { margin: 0; font-size: 1.2rem; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: .85rem; color: var(--svag); }
+input:not([type=checkbox]), textarea {
+  background: var(--bag); border: 1px solid var(--kant); border-radius: 8px;
+  padding: 9px 10px; font-size: 1rem; color: var(--tekst); width: 100%; min-height: 42px;
+}
+textarea { resize: vertical; }
+input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); }
+label.tjek { flex-direction: row; align-items: center; gap: 8px; font-size: 1rem; color: var(--tekst); }
+.raekke { display: grid; grid-template-columns: 1fr 8.5rem; gap: 10px; }
+.er-heldags .raekke { grid-template-columns: 1fr; }
+.er-heldags .tidfelt { display: none; }
+fieldset { border: 1px solid var(--kant); border-radius: 8px; margin: 0; padding: 8px 12px 10px; }
+legend { font-size: .85rem; color: var(--svag); padding: 0 4px; }
+.hvem { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 4px; }
+small { color: var(--svag); }
+.fejl { margin: 0; color: var(--fare); font-size: .9rem; }
+.knapper { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+.fyld { flex: 1; }
+[hidden] { display: none !important; }
+
+/* ---------- Login ---------- */
+
+.login { flex: 1; display: grid; place-items: center; padding: 16px; }
+.login form {
+  width: min(380px, 100%); background: var(--flade);
+  border: 1px solid var(--kant); border-radius: 14px;
+}
+body.laast > :not(.login) { display: none; }
+
+/* ---------- Telefon ---------- */
+
+@media (max-width: 700px) {
+  .top { padding: 10px 12px 6px; }
+  h1 { flex-basis: 100%; margin: 4px 0 0; font-size: 1.1rem; order: 5; }
+  .personer { padding: 0 12px 8px; flex-wrap: nowrap; overflow-x: auto; }
+  .person { flex: none; }
+  main { padding: 0 12px 12px; }
+
+  /* Ugen som én lodret liste */
+  .uge { display: flex; flex-direction: column; overflow-y: auto; }
+  .ugedag { flex: none; overflow: visible; }
+  .ugedag-hoved { flex-direction: row; align-items: baseline; gap: 8px; }
+  .ugedag-liste { overflow: visible; }
+
+  .maaned { grid-template-columns: repeat(7, minmax(0, 1fr)); grid-auto-rows: minmax(72px, 1fr); }
+  .maaned .uge-nr { display: none; }
+  .celle { padding: 2px; }
+  .celle .aftale { padding: 1px 3px 1px 7px; font-size: .68rem; }
+  .celle .aftale .tid { display: none; }
+  .celle .aftale::before { width: 4px; }
+}
