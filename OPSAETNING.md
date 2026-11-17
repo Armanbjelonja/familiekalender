@@ -78,9 +78,24 @@ create policy "familien ser tokens" on public.tokens
 3. Åbn appen "Kalender" fra hjemmeskærmen, og log ind med familiens login.
    Det skal gøres i appen – login i Safari følger ikke med over.
 
+## Trin 4 – Claude API-nøgle (det eneste, der mangler, for at assistenten virker)
+
+Funktionen `assistent` er lagt op i Supabase (koden ligger i
+`supabase/functions/assistent/index.ts`, "Verify JWT" er slået fra, fordi funktionen selv
+tjekker login og token). Den mangler kun nøglen:
+
+1. Gå til https://console.anthropic.com og opret en konto (eller log ind).
+2. **Billing** → køb et lille forudbetalt beløb, f.eks. 5 USD. Slå gerne automatisk
+   genopfyldning fra, så kan regningen aldrig løbe løbsk.
+3. **API keys** → **Create key** → navn `familiekalender` → kopiér nøglen (`sk-ant-…`).
+   Den vises kun denne ene gang.
+4. I Supabase: **Edge Functions → Secrets** → navn `ANTHROPIC_API_KEY`, værdi = nøglen → **Save**.
+
+Nøglen skal kun ligge i Supabase. Send den ikke i en chat, og læg den aldrig i koden.
+
+Ændres funktionens kode senere, skal den lægges op igen: Edge Functions → `assistent` →
+Code → indsæt den nye kode → Deploy updates.
+
 ## Kommer senere
 
-- **Trin 4 – Claude API**: konto på https://console.anthropic.com med et lille forudbetalt
-  beløb og en API-nøgle. Nøglen lægges direkte ind i Supabase (Edge Functions → Secrets)
-  – den skal ikke sendes til Claude i chatten og kommer aldrig i frontenden.
 - **Trin 6–7**: kalender-abonnement og Siri-genvej sættes op på hver iPhone (guide følger).
